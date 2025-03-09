@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Tidur, Cintaku ❤️</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to bottom, #1a1a2e, #16213e);
+            overflow: hidden;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+        }
+
+        .container {
+            position: relative;
+            max-width: 600px;
+        }
+
+        h1 {
+            font-size: 2.8em;
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        .message {
+            font-size: 1.5em;
+            margin-top: 10px;
+            animation: fadeIn 5s ease-in-out;
+            min-height: 50px;
+        }
+
+        .heart {
+            color: red;
+            font-size: 2em;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        .stars, .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .star, .heart-particle {
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .star {
+            background: white;
+            width: 3px;
+            height: 3px;
+            animation: twinkle 2s infinite alternate;
+        }
+
+        .heart-particle {
+            background: pink;
+            width: 10px;
+            height: 10px;
+            transform: rotate(45deg);
+            animation: floatUp 4s linear infinite;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes twinkle {
+            from { opacity: 0.3; }
+            to { opacity: 1; }
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes floatUp {
+            from { transform: translateY(0); opacity: 1; }
+            to { transform: translateY(-200px); opacity: 0; }
+        }
+
+        .button {
+            background: red;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+
+        .button:hover {
+            background: darkred;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Selamat Tidur, Sayang ❤️</h1>
+        <p class="message">Aku berharap bintang-bintang menemanimu dalam mimpi indah malam ini.</p>
+        <button class="button" onclick="showLoveMessage()">Peluk Virtual 🤗</button>
+        <button class="button" onclick="playMusic()">Putar Musik 🎵</button>
+        <p class="heart">💖</p>
+        <div class="stars"></div>
+        <div class="hearts"></div>
+    </div>
+    <audio id="background-music" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-sweet.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung elemen audio.
+    </audio>
+
+    <script>
+        const messages = [
+            "Mimpi indah, cintaku...",
+            "Aku selalu di sisimu meski hanya dalam mimpi.",
+            "Tidurlah dengan tenang, aku akan selalu menjagamu.",
+            "Kamu adalah bintang terindah di langit hatiku."
+        ];
+        let messageIndex = 0;
+        function changeMessage() {
+            document.querySelector('.message').textContent = messages[messageIndex];
+            messageIndex = (messageIndex + 1) % messages.length;
+        }
+        setInterval(changeMessage, 5000);
+
+        function createStars() {
+            const starContainer = document.querySelector('.stars');
+            for (let i = 0; i < 150; i++) {
+                let star = document.createElement('div');
+                star.classList.add('star');
+                let x = Math.random() * window.innerWidth;
+                let y = Math.random() * window.innerHeight;
+                let duration = Math.random() * 2 + 1;
+                star.style.left = `${x}px`;
+                star.style.top = `${y}px`;
+                star.style.animationDuration = `${duration}s`;
+                starContainer.appendChild(star);
+            }
+        }
+
+        function createHearts() {
+            const heartContainer = document.querySelector('.hearts');
+            setInterval(() => {
+                let heart = document.createElement('div');
+                heart.classList.add('heart-particle');
+                let x = Math.random() * window.innerWidth;
+                heart.style.left = `${x}px`;
+                heartContainer.appendChild(heart);
+                setTimeout(() => heart.remove(), 4000);
+            }, 500);
+        }
+
+        function showLoveMessage() {
+            document.querySelector('.button').textContent = "Aku sayang kamu selamanya ❤️";
+            document.querySelector('.button').style.transform = "scale(1.1)";
+            setTimeout(() => {
+                document.querySelector('.button').style.transform = "scale(1)";
+            }, 300);
+        }
+
+        function playMusic() {
+            const music = document.getElementById("background-music");
+            music.play().catch(error => console.log("Autoplay diblokir, pengguna harus menekan tombol."));
+        }
+
+        createStars();
+        createHearts();
+    </script>
+</body>
+</html>
